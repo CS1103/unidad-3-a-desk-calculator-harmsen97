@@ -17,6 +17,8 @@ iostream
 -
 map
 -
+cmath
+-
 
 /Users/jeronimo/Desktop/Calc/driver.h
 Token_stream.h
@@ -24,6 +26,10 @@ Token_stream.h
 
 /Users/jeronimo/Desktop/Calc/main.cpp
 iostream
+-
+fstream
+-
+sstream
 -
 driver.h
 /Users/jeronimo/Desktop/Calc/driver.h

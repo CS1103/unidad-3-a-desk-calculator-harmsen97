@@ -8,12 +8,15 @@
 #include "Token.h"
 #include <iostream>
 #include <map>
+#include <cmath>
 
 // Aux Headers
 
 double expr(bool get);
 
 double term(bool get);
+
+double power(bool get);
 
 double prim(bool get);
 
@@ -50,6 +53,7 @@ Token Token_stream::get() {
         case ';':
         case '*':
         case '/':
+        case '^':
         case '+':
         case '-':
         case '(':
@@ -119,15 +123,15 @@ double expr(bool get){
 }
 
 double term(bool get){
-    double left = prim(get);
+    double left = power(get);
 
     while(true) {
         switch(ts.current().kind) {
             case Kind::mul:
-                left *= prim(true);
+                left *= power(true);
                 break;
             case Kind::div:
-                if(auto d = prim(true)){
+                if(auto d = power(true)){
                     left /= d;
                     break;
                 }
@@ -137,6 +141,21 @@ double term(bool get){
         }
     }
 }
+
+double power(bool get){
+    double left = prim(get);
+
+    while(true){
+        switch(ts.current().kind){
+            case Kind::pow:
+                left = pow(left, prim(true));
+                break;
+            default:
+                return left;
+        }
+    }
+}
+
 
 double prim(bool get){
     if(get) ts.get();
